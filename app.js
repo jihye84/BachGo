@@ -1313,25 +1313,9 @@ const citiesData = [
 let ttsEnabled = true;
 let ttsSliderValue = 50; // Default at 50 (middle) for 1x volume
 const ttsBaseVolume = 0.8; // 80% is the normal base, allowing 25% boost up to 1.0
-const synth = window.speechSynthesis;
-let koreanVoice = null;
+const ttsAudio = new Audio(); // Pre-generated MP3 narration player
+ttsAudio.preload = 'auto';
 const ttsVolumeSlider = document.getElementById('tts-volume');
-
-// Wait for voices to be loaded
-function loadVoices() {
-    const voices = synth.getVoices();
-    koreanVoice = voices.find(v => v.lang.includes('ko') && (v.name.includes('Google') || v.name.includes('Premium') || v.name.includes('Female'))) ||
-        voices.find(v => v.lang.includes('ko-KR')) ||
-        voices.find(v => v.lang.includes('ko')) ||
-        voices[0];
-}
-
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = loadVoices;
-}
-
-// Global reference to current utterance to adjust volume while playing
-let currentUtterance = null;
 
 function getActualTtsVolume() {
     // 50 is 1x. Value 100 means 2x. Cap at Native 1.0 max.
@@ -1339,18 +1323,20 @@ function getActualTtsVolume() {
     return Math.min(1.0, ttsBaseVolume * multiplier);
 }
 
+// Play pre-generated MP3 narration for a city
+function speakCity(cityId) {
+    if (!ttsEnabled || ttsSliderValue === 0 || !audioUnlocked) return;
+
+    ttsAudio.pause();
+    ttsAudio.currentTime = 0;
+    ttsAudio.src = `tts/${cityId}.mp3`;
+    ttsAudio.volume = getActualTtsVolume();
+    ttsAudio.play().catch(e => console.error("TTS audio error:", e));
+}
+
+// Legacy wrapper
 function speakText(text) {
-    if (!ttsEnabled || ttsSliderValue === 0) return;
-
-    synth.cancel(); // Stop any currently playing audio
-    currentUtterance = new SpeechSynthesisUtterance(text);
-    if (koreanVoice) currentUtterance.voice = koreanVoice;
-    currentUtterance.lang = 'ko-KR';
-    currentUtterance.rate = 0.95;
-    currentUtterance.pitch = 1.0;
-    currentUtterance.volume = getActualTtsVolume(); // Apply global TTS volume
-
-    synth.speak(currentUtterance);
+    if (currentCityData) speakCity(currentCityData.id);
 }
 
 // Map TTS toggle button
@@ -1359,10 +1345,9 @@ ttsBtn.addEventListener('click', () => {
     ttsEnabled = !ttsEnabled;
     updateTtsBtnUI();
     if (!ttsEnabled) {
-        synth.cancel(); // Stop immediately if muted
+        ttsAudio.pause();
     } else if (currentCityData && document.getElementById('active-state').classList.contains('hidden') === false) {
-        // Optionally replay when turned back on
-        speakText(`${currentCityData.nameKR}. ${currentCityData.desc}`);
+        speakCity(currentCityData.id);
     }
 });
 
@@ -1371,17 +1356,17 @@ if (ttsVolumeSlider) {
     ttsVolumeSlider.addEventListener('input', (e) => {
         ttsSliderValue = parseInt(e.target.value, 10);
 
-        // Auto-unmute if sliding up from 0 when muted
         if (ttsSliderValue > 0 && !ttsEnabled) {
             ttsEnabled = true;
             updateTtsBtnUI();
         } else if (ttsSliderValue === 0 && ttsEnabled) {
             ttsEnabled = false;
             updateTtsBtnUI();
-            synth.cancel();
+            ttsAudio.pause();
         }
 
-        // Apply immediately if currently speaking by changing the volume of the in-flight utterance isn't universally supported, but we track the value for the next call.
+        // Apply volume immediately to currently playing narration
+        ttsAudio.volume = getActualTtsVolume();
     });
 }
 
@@ -2074,7 +2059,7 @@ function viewCity(city) {
     }
 
     // Narrate text (Must be synchronous with click event)
-    speakText(`${city.nameKR}. ${city.desc}`);
+    speakCity(city.id);
 
     // Pause all current audio
     bgAudio.pause();
@@ -2871,7 +2856,7 @@ function moveNext() {
 if (replayTtsBtn) {
     replayTtsBtn.addEventListener('click', () => {
         if (currentCityData) {
-            speakText(`${currentCityData.nameKR}. ${currentCityData.desc}`);
+            speakCity(currentCityData.id);
         }
     });
 }
