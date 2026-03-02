@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.S. 바흐의 발자취를 따라서</title>
+    <link rel="icon" type="image/png" href="Favicon.png?v=2">
+    <link rel="apple-touch-icon" href="Favicon.png?v=2">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+KR:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Welcome Splash Overlay -->
+    <div id="welcome-overlay">
+        <div class="welcome-content">
+            <div class="welcome-ornament">♩ ♪ ♫ ♬</div>
+            <h1 class="welcome-title">J.S. 바흐의 발자취를 따라서</h1>
+            <p class="welcome-subtitle">In the Footsteps of Johann Sebastian Bach</p>
+            <button id="welcome-enter-btn" class="welcome-enter-btn">
+                바흐의 세계로 들어가기<br>
+                <span class="welcome-btn-sub">Enter the World of Bach</span>
+            </button>
+            <p class="welcome-hint">🎧 오디오 경험을 위해 헤드폰을 권장합니다</p>
+            <p class="welcome-hint">▶ 유튜브로 오디오가 재생됩니다. 유튜브 프리미엄 사용을 권장합니다.</p>
+        </div>
+    </div>
+
+    <!-- Influencer Modal (Hidden by Default) -->
+    <div id="influencer-overlay">
+        <div id="influencer-modal">
+            <div class="influencer-close" onclick="closeInfluencerModal()">&times;</div>
+            <div class="influencer-image-container">
+                <img class="influencer-image" id="influencer-img" src="" alt="Influencer">
+            </div>
+            <div class="influencer-content">
+                <span class="influencer-badge" id="influencer-badge"></span>
+                <h2 class="influencer-name" id="influencer-name"></h2>
+                <p class="influencer-years" id="influencer-years"></p>
+                <p class="influencer-desc" id="influencer-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Masterwork Modal (Hidden by Default) -->
+    <div id="masterwork-overlay">
+        <div id="masterwork-modal">
+            <div class="masterwork-close" onclick="closeMasterworkModal()">&times;</div>
+            <div class="masterwork-modal-header">
+                <span id="mw-modal-emoji" class="mw-modal-emoji"></span>
+                <h2 id="mw-modal-title" class="mw-modal-title"></h2>
+            </div>
+            <p id="mw-modal-bwv" class="mw-modal-bwv"></p>
+            <div id="mw-modal-desc" class="mw-modal-desc"></div>
+            <div id="mw-modal-yt" class="mw-modal-yt"></div>
+        </div>
+    </div>
+
+    <!-- Tourist Spot Modal (Hidden by Default) -->
+    <div id="tourist-overlay">
+        <div id="tourist-modal">
+            <div class="tourist-modal-close" onclick="closeTouristModal()">&times;</div>
+            <div class="tourist-modal-img-wrap" id="tourist-modal-img-wrap">
+                <img id="tourist-modal-img" src="" alt="">
+            </div>
+            <div class="tourist-modal-content">
+                <h2 id="tourist-modal-name" class="tourist-modal-name"></h2>
+                <p id="tourist-modal-desc" class="tourist-modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Main Map Area -->
+        <main class="map-section">
+            <div id="map"></div>
+
+            <!-- Timeline Bar (overlaid on map top) -->
+            <div class="timeline-container" id="timeline-container">
+                <button class="timeline-next-btn" id="timeline-next-btn" title="다음 도시로 이동" onclick="goToNextCity()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                <div class="timeline-labels">
+                    <span>1685 (0세)</span>
+                    <span id="timeline-current-age" class="timeline-current-age"></span>
+                    <span>1750 (65세)</span>
+                </div>
+                <div class="timeline-track">
+                    <div class="timeline-progress" id="timeline-progress"></div>
+                </div>
+            </div>
+
+
+            <!-- Family Tree Panel -->
+            <div id="family-tree-panel" class="family-tree-panel hidden">
+                <div class="ft-header">
+                    <span class="ft-title">바흐 가문 계보</span>
+                    <button class="ft-close" onclick="toggleFamilyTree()">✕</button>
+                </div>
+                <div class="ft-body">
+                    <!-- 고조할아버지 -->
+                    <div class="ft-gen">
+                        <div class="ft-node ft-ancestor" data-city="wechmar">
+                            <div class="ft-name">파이트 바흐</div>
+                            <div class="ft-years">? – 1619</div>
+                            <div class="ft-role">고조 · 헝가리에서 돌아온 제분업자이자 치터 연주자</div>
+                        </div>
+                    </div>
+                    <div class="ft-line-v"></div>
+                    <!-- 증조할아버지 -->
+                    <div class="ft-gen">
+                        <div class="ft-node ft-ancestor" data-city="erfurt">
+                            <div class="ft-name">요하네스 바흐</div>
+                            <div class="ft-years">1604 – 1673</div>
+                            <div class="ft-role">증조 · 에르푸르트 프레디거교회 오르가니스트 40년 봉직</div>
+                        </div>
+                    </div>
+                    <div class="ft-line-v"></div>
+                    <!-- 할아버지 -->
+                    <div class="ft-gen">
+                        <div class="ft-node ft-ancestor" data-city="erfurt">
+                            <div class="ft-name">크리스토프 바흐</div>
+                            <div class="ft-years">1613 – 1661</div>
+                            <div class="ft-role">조부 · 에르푸르트 시 악사(Stadtpfeifer), 쌍둥이 아들의 아버지</div>
+                        </div>
+                    </div>
+                    <div class="ft-line-v"></div>
+                    <!-- 아버지 -->
+                    <div class="ft-gen">
+                        <div class="ft-node ft-parent" data-city="eisenach">
+                            <div class="ft-name">요한 암브로지우스 바흐</div>
+                            <div class="ft-years">1645 – 1695</div>
+                            <div class="ft-role">부 · 바이올린 명수, 에르푸르트에서 아이제나흐로 이주</div>
+                        </div>
+                    </div>
+                    <div class="ft-line-v"></div>
+                    <!-- 형제 세대 -->
+                    <div class="ft-siblings-label">자녀들</div>
+                    <div class="ft-gen ft-siblings-row">
+                        <div class="ft-node ft-sibling" data-city="ohrdruf">
+                            <div class="ft-name">요한 크리스토프</div>
+                            <div class="ft-years">1671 – 1721</div>
+                            <div class="ft-role">큰형 · 부모 사후 어린 바흐를 돌보며 음악을 가르침</div>
+                        </div>
+                        <div class="ft-node ft-jsbach" data-city="eisenach">
+                            <div class="ft-name">요한 제바스티안 바흐</div>
+                            <div class="ft-years">1685 – 1750</div>
+                            <div class="ft-role">★ 서양 음악의 아버지 · 1000곡 이상의 걸작을 남기다</div>
+                        </div>
+                        <div class="ft-node ft-sibling" data-city="arnstadt">
+                            <div class="ft-name">요한 야콥 바흐</div>
+                            <div class="ft-years">1682 – 1722</div>
+                            <div class="ft-role">형 · 스웨덴 군악대 입대, 〈이별의 카프리치오〉의 주인공</div>
+                        </div>
+                    </div>
+                    <!-- 아내들 -->
+                    <div class="ft-wives-row">
+                        <div class="ft-wife-block">
+                            <div class="ft-wife-line"></div>
+                            <div class="ft-node ft-wife" data-city="dornheim">
+                                <div class="ft-name">마리아 바르바라</div>
+                                <div class="ft-years">1684 – 1720</div>
+                                <div class="ft-role">첫째 아내 · 도른하임 결혼, 바흐가 칼스바트 여행 중 급서</div>
+                            </div>
+                        </div>
+                        <div class="ft-wife-block">
+                            <div class="ft-wife-line"></div>
+                            <div class="ft-node ft-wife" data-city="koethen">
+                                <div class="ft-name">안나 막달레나</div>
+                                <div class="ft-years">1701 – 1760</div>
+                                <div class="ft-role">둘째 아내 · 소프라노 가수, 바흐 만년의 음악 동반자</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ft-line-v"></div>
+                    <!-- 자녀들 -->
+                    <div class="ft-children-label">주요 자녀</div>
+                    <div class="ft-gen ft-children-row">
+                        <div class="ft-node ft-child" data-city="">
+                            <div class="ft-name">빌헬름 프리데만</div>
+                            <div class="ft-years">1710 – 1784</div>
+                            <div class="ft-role">장남 · 천재적 재능, 불운한 생애로 "할레 바흐"</div>
+                        </div>
+                        <div class="ft-node ft-child" data-city="potsdam">
+                            <div class="ft-name">C.P.E. 바흐</div>
+                            <div class="ft-years">1714 – 1788</div>
+                            <div class="ft-role">차남 · 감정양식의 선구자, 프리드리히 대왕 궁정 건반주자</div>
+                        </div>
+                        <div class="ft-node ft-child" data-city="">
+                            <div class="ft-name">요한 크리스티안</div>
+                            <div class="ft-years">1735 – 1782</div>
+                            <div class="ft-role">막내 · 모차르트에게 영향, 런던에서 활약한 "런던 바흐"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Influencer Persistent Cards (dynamically populated) -->
+            <div id="influencer-cards-container" class="influencer-cards-container"></div>
+
+            <!-- Audio Controls -->
+            <div class="controls-container">
+                <!-- TTS Control Group -->
+                <div class="control-group">
+                    <button id="tts-toggle" class="control-btn" aria-label="음성 안내 켜기/끄기" title="음성 안내 (TTS)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon-volume-2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 0 0 1 0 14.14"></path>
+                        </svg>
+                    </button>
+                    <div class="volume-slider-container">
+                        <input type="range" id="tts-volume" class="volume-slider" min="0" max="100" value="50"
+                            aria-label="음성 안내 볼륨 조절">
+                    </div>
+                </div>
+
+                <!-- Music Control Group -->
+                <div class="control-group">
+                    <button id="music-toggle" class="control-btn" aria-label="배경 음악 켜기/끄기" title="배경 음악">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon-music">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                    </button>
+                    <div class="volume-slider-container">
+                        <input type="range" id="music-volume" class="volume-slider" min="0" max="100" value="50"
+                            aria-label="배경 음악 볼륨 조절">
+                    </div>
+                </div>
+
+                <!-- 음악 ticker - controls-container 내 오른쪽에 1줄로 표시 -->
+                <div id="music-ticker-wrap" class="music-ticker-wrap">
+                    <span class="ticker-note" onclick="toggleTickerPopup()">♪</span>
+                    <div class="ticker-mask">
+                        <span id="music-ticker-text" class="ticker-text">재생 중인 배경음악 없음</span>
+                    </div>
+                    <button id="ticker-yt-btn" class="ticker-yt-btn" title="YouTube에서 전곡 감상" style="display:none;"
+                        onclick="openCurrentYouTube()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path
+                                d="M21.8 8s-.2-1.4-.8-2c-.7-.7-1.5-.7-1.9-.8C16.5 5 12 5 12 5s-4.5 0-7.1.2c-.4.1-1.2.1-1.9.8-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.7.7 1.7.7 2.1.8 1.5.1 6.9.2 6.9.2s4.5 0 7.1-.2c.4-.1 1.2-.1 1.9-.8.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5c0-1.6-.2-3.2-.2-3.2zM9.9 15.1V8.9l5.1 3.1-5.1 3.1z" />
+                        </svg>
+                    </button>
+                    <!-- YouTube popup -->
+                    <div id="ticker-yt-popup" class="ticker-yt-popup" style="display:none;">
+                        <a href="#" onclick="openCurrentYouTube(); hideTickerPopup(); return false;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="#ff4444">
+                                <path
+                                    d="M21.8 8s-.2-1.4-.8-2c-.7-.7-1.5-.7-1.9-.8C16.5 5 12 5 12 5s-4.5 0-7.1.2c-.4.1-1.2.1-1.9.8-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.7.7 1.7.7 2.1.8 1.5.1 6.9.2 6.9.2s4.5 0 7.1-.2c.4-.1 1.2-.1 1.9-.8.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5c0-1.6-.2-3.2-.2-3.2zM9.9 15.1V8.9l5.1 3.1-5.1 3.1z" />
+                            </svg>
+                            YouTube에서 전곡 감상하기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Side Info Panel -->
+        <aside class="info-panel" id="info-panel">
+            <div class="info-content">
+                <!-- Family Tree Button (top-left) -->
+                <button id="family-tree-btn" class="family-tree-btn" onclick="toggleFamilyTree()" title="바흐 가문 계보">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                        stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="21" r="1.5" fill="currentColor" stroke="none" />
+                        <line x1="12" y1="19.5" x2="12" y2="14" />
+                        <line x1="6" y1="14" x2="18" y2="14" />
+                        <line x1="6" y1="14" x2="6" y2="9" />
+                        <line x1="18" y1="14" x2="18" y2="9" />
+                        <circle cx="6" cy="14" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="18" cy="14" r="1.2" fill="currentColor" stroke="none" />
+                        <line x1="3" y1="9" x2="9" y2="9" />
+                        <line x1="15" y1="9" x2="21" y2="9" />
+                        <circle cx="3" cy="9" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="15" cy="9" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="21" cy="9" r="1.2" fill="currentColor" stroke="none" />
+                        <line x1="3" y1="9" x2="3" y2="4.5" />
+                        <line x1="9" y1="9" x2="9" y2="4.5" />
+                        <line x1="15" y1="9" x2="15" y2="4.5" />
+                        <line x1="21" y1="9" x2="21" y2="4.5" />
+                        <circle cx="3" cy="4" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="9" cy="4" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="15" cy="4" r="1.2" fill="currentColor" stroke="none" />
+                        <circle cx="21" cy="4" r="1.2" fill="currentColor" stroke="none" />
+                    </svg>
+                </button>
+                <!-- Refresh Button (top-right) -->
+                <button class="app-refresh-btn" onclick="location.reload()" title="처음으로 돌아가기">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                </button>
+                <!-- Introduction & Timeline always visible -->
+                <div class="intro-section" id="intro-section">
+                    <h3 class="intro-title">바흐의 발자취를 따라가 보세요</h3>
+                    <p class="intro-subtitle">아래 연표나 목록에서 도시를 선택하여 여정을 시작합니다.</p>
+                </div>
+
+
+
+                <div class="placeholder-state" id="placeholder-state">
+                    <div class="init-city-grid" id="init-city-grid">
+                        <!-- City buttons will be populated here by JS -->
+                    </div>
+                </div>
+
+                <div class="active-state hidden" id="active-state">
+                    <div class="city-header-row" id="city-header-row">
+                        <div class="city-title-group"
+                            style="position: relative; display: flex; align-items: center; gap: 10px;">
+                            <h3 id="city-german-name" class="city-german-name">German Name</h3>
+                            <h2 id="city-name" class="city-name">도시 이름</h2>
+                            <button id="replay-tts-btn" class="replay-tts-btn icon-only" title="나레이션 다시 듣기">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
+                                    fill="currentColor">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="city-nav-buttons" class="city-nav-buttons"></div>
+                    </div>
+                    <p id="city-period" class="city-period">거주 기간 및 나이</p>
+
+                    <div class="description-header">
+                        <p id="city-description" class="city-description">도시 설명이 여기에 표시됩니다.</p>
+                    </div>
+                    <!-- Masterwork Badges Section -->
+                    <div id="masterworks-section" class="masterworks-section"></div>
+                    <div class="gallery-container">
+                        <img id="city-image" src="" alt="도시 풍경 사진" class="city-image">
+                    </div>
+                    <!-- New Tourist Spot Panel -->
+                    <div id="tourist-info-panel" class="tourist-info-panel" style="display: none;">
+                        <h4 id="tourist-panel-name" class="tourist-panel-name"></h4>
+                        <p id="tourist-panel-desc" class="tourist-panel-desc"></p>
+                    </div>
+                    <div id="city-image-attribution" class="city-image-attribution"
+                        style="display: none; font-size: 0.75rem; color: #888; text-align: right; margin-top: 5px;">
+                    </div>
+                    <div id="youtube-player"
+                        style="position: absolute; top: -9999px; left: -9999px; width: 300px; height: 200px;"></div>
+                </div>
+            </div>
+        </aside>
+
+        </aside>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
