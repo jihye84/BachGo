@@ -1320,8 +1320,7 @@ const ttsVolumeSlider = document.getElementById('tts-volume');
 // Wait for voices to be loaded
 function loadVoices() {
     const voices = synth.getVoices();
-    koreanVoice = voices.find(v => v.lang.includes('ko') && (v.name.includes('Hyunsu') || v.name.includes('Male') || v.name.includes('남성'))) ||
-        voices.find(v => v.lang.includes('ko') && !v.name.includes('Female') && !v.name.includes('여성')) ||
+    koreanVoice = voices.find(v => v.lang.includes('ko') && (v.name.includes('Google') || v.name.includes('Premium') || v.name.includes('Female'))) ||
         voices.find(v => v.lang.includes('ko-KR')) ||
         voices.find(v => v.lang.includes('ko')) ||
         voices[0];
