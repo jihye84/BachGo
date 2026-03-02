@@ -2955,8 +2955,6 @@ if (initCityGrid) {
     });
 }
 
-// Load voices initially
-loadVoices();
 
 // Helper to update the music ticker text
 function setTickerText(text) {
