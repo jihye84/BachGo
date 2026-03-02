@@ -1,6 +1,49 @@
 // Global flag: audio is locked until welcome overlay is dismissed
 let audioUnlocked = false;
 
+// --- Welcome Splash Overlay (must be registered early) ---
+document.getElementById('welcome-enter-btn')?.addEventListener('click', () => {
+    audioUnlocked = true;
+
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const silent = ctx.createBufferSource();
+        silent.buffer = ctx.createBuffer(1, 1, 22050);
+        silent.connect(ctx.destination);
+        silent.start(0);
+    } catch (e) { /* ignore */ }
+
+    const overlay = document.getElementById('welcome-overlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        setTimeout(() => overlay.remove(), 1000);
+    }
+
+    // Trigger music after a short delay (variables may initialize later)
+    setTimeout(() => {
+        if (typeof musicEnabled !== 'undefined' && musicEnabled && typeof ytPlayerReady !== 'undefined' && ytPlayerReady) {
+            if (typeof currentCityData !== 'undefined' && currentCityData && currentCityData.youtubeId) {
+                ytPlayer.setVolume(getActualYouTubeVolume());
+                ytPlayer.loadVideoById({
+                    videoId: currentCityData.youtubeId,
+                    startSeconds: currentCityData.youtubeStart || 0
+                });
+            } else {
+                const INTRO_VIDEO_ID = 'x8Rv9ppP6A8';
+                const INTRO_START_SEC = 1115;
+                currentYoutubeId = INTRO_VIDEO_ID;
+                currentVolumeLevel = 60;
+                ytPlayer.setVolume(getActualYouTubeVolume());
+                ytPlayer.loadVideoById({
+                    videoId: INTRO_VIDEO_ID,
+                    startSeconds: INTRO_START_SEC
+                });
+                setTickerText('J.S. Bach \u2014 \uAD00\uD604\uC545 \uBAA8\uC74C\uACE1 2\uBC88 B\uB2E8\uC870 BWV 1067 \uC81C7\uACE1 \uBC14\uB514\uB124\uB9AC (Badinerie) \u2666 Netherlands Bach Society \u00B7 Shunske Sato');
+            }
+        }
+    }, 200);
+});
+
 // 1. Map Initialization
 // Center on Germany, default view includes all Bach cities
 const map = L.map('map', {
@@ -232,7 +275,6 @@ const referenceCities = [
     { name: '뮌헨', coords: [48.135, 11.582] },
     { name: '프랑크푸르트', coords: [50.110, 8.682] },
     { name: '쾰른', coords: [50.938, 6.960] },
-    { name: '드레스덴', coords: [51.051, 13.738] },
     { name: '하노버', coords: [52.376, 9.732] },
     { name: '고타', coords: [50.985, 10.58] },
     { name: '뉘른베르크', coords: [49.454, 11.078] },
@@ -3226,48 +3268,3 @@ document.querySelectorAll('.ft-node').forEach(node => {
     });
 });
 
-// --- Welcome Splash Overlay ---
-document.getElementById('welcome-enter-btn')?.addEventListener('click', () => {
-    // Unlock the global audio flag
-    audioUnlocked = true;
-
-    // Unlock browser audio autoplay by creating user-gesture-triggered AudioContext
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const silent = ctx.createBufferSource();
-        silent.buffer = ctx.createBuffer(1, 1, 22050);
-        silent.connect(ctx.destination);
-        silent.start(0);
-    } catch (e) { /* ignore */ }
-
-    // Fade out the overlay
-    const overlay = document.getElementById('welcome-overlay');
-    if (overlay) {
-        overlay.classList.add('hidden');
-        setTimeout(() => overlay.remove(), 1000);
-    }
-
-    // Now trigger music playback
-    if (musicEnabled && ytPlayerReady) {
-        if (currentCityData && currentCityData.youtubeId) {
-            // A city is already loaded — play its music
-            ytPlayer.setVolume(getActualYouTubeVolume());
-            ytPlayer.loadVideoById({
-                videoId: currentCityData.youtubeId,
-                startSeconds: currentCityData.youtubeStart || 0
-            });
-        } else if (!currentCityData) {
-            // Home screen — play intro music
-            const INTRO_VIDEO_ID = 'x8Rv9ppP6A8';
-            const INTRO_START_SEC = 1115;
-            currentYoutubeId = INTRO_VIDEO_ID;
-            currentVolumeLevel = 60;
-            ytPlayer.setVolume(getActualYouTubeVolume());
-            ytPlayer.loadVideoById({
-                videoId: INTRO_VIDEO_ID,
-                startSeconds: INTRO_START_SEC
-            });
-            setTickerText('J.S. Bach — 관현악 모음곡 2번 B단조 BWV 1067 제7곡 바디네리 (Badinerie) ♦ Netherlands Bach Society · Shunske Sato');
-        }
-    }
-});
