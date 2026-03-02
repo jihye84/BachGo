@@ -1156,88 +1156,11 @@ const citiesData = [
             }
         ],
         next: [
-            { id: "potsdam", label: "<span class='nav-text'>여행: 포츠담</span><span class='nav-arrow'>➔</span>", isBranch: true },
             { id: "dresden", label: "<span class='nav-text'>여행: 드레스덴</span><span class='nav-arrow'>➔</span>", isBranch: true },
             { id: "halle", label: "<span class='nav-text'>아들의 도시: 할레</span><span class='nav-arrow'>➔</span>", isBranch: true },
+            { id: "potsdam", label: "<span class='nav-text'>여행: 포츠담</span><span class='nav-arrow'>➔</span>", isBranch: true },
             { id: "milan", label: "<span class='nav-text'>아들의 도시: 밀라노</span><span class='nav-arrow'>➔</span>", isBranch: true },
             { id: "london", label: "<span class='nav-text'>아들의 도시: 런던</span><span class='nav-arrow'>➔</span>", isBranch: true }
-        ]
-    },
-    {
-        id: "potsdam",
-        isBranch: true,
-        nameKR: "포츠담",
-        nameDE: "Potsdam",
-        period: "1747 (62세)",
-        badge: ["초대형 연주", "음악의 헌정", "아들과의 재회"],
-        coords: [52.3960, 13.0450],
-        desc: "노년의 바흐는, 아들 카를 필리프 에마누엘이 프리드리히 대왕의 궁정 쳄발리스트로 근무하던 포츠담 상수시 궁전에 초대되었습니다. 부자의 재회이자 역사적인 만남이었습니다. 왕이 제시한 복잡한 주제를 바탕으로 대위법적 즉흥 연주를 펼친 후, 이를 악보로 정리하여 음악의 헌정이라는 제목으로 바쳤습니다.",
-        img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/Aerial_image_of_Sanssouci_%28view_from_the_south%29.jpg",
-        youtubeId: "Lv5A1gy2oys",
-        youtubeStart: 9,
-        youtubeVolume: 75, // Chamber music, moderate
-        audioTitle: "<음악의 헌정> 중 3성부 리체르카레, BWV 1079 (Fp. 레오 판 두셀라르, Leo van Doeselaar)",
-        audioAttribution: "출처: YouTube 채널 'Netherlands Bach Society'",
-        influencer: {
-            name: "프리드리히 대왕",
-            years: "1712 – 1786",
-            desc: "포츠담 궁정에서 프로이센의 군주 프리드리히 대왕을 만난 노거장 바흐는 '왕의 테마'로 즉흥 연주를 펼쳤습니다. 대왕은 바흐를 '단 한 명의 거장'이라 칭송하며 최고의 예우를 다했습니다.",
-            img: "potsdam_influence.jpg",
-            identity: "바흐를 초대한 군주"
-        },
-        influencers: [
-            {
-                name: "프리드리히 대왕",
-                years: "1712 – 1786",
-                desc: "포츠담 궁정에서 프로이센의 군주 프리드리히 대왕을 만난 노거장 바흐는 '왕의 테마'로 즉흥 연주를 펼쳤습니다. 대왕은 바흐를 '단 한 명의 거장'이라 칭송하며 최고의 예우를 다했습니다.",
-                img: "potsdam_influence.jpg",
-                identity: "바흐를 초대한 군주"
-            },
-            {
-                name: "카를 필리프 에마누엘 바흐",
-                years: "1714 – 1788",
-                desc: "바흐의 다섯째 아들이자 둘째 아들 중 가장 성공한 음악가인 카를 필리프 에마누엘은, 프리드리히 대왕의 궁정 쳄발리스트로 약 30년간 봉직했습니다. 아버지의 포츠담 방문을 주선한 장본인이며, '감정과다 양식(엠프핀트자머 슈틸)'의 선구자로서 하이든과 모차르트에게 깊은 영향을 끼쳤습니다. 아버지 바흐의 작품을 보존하고 전파하는 데에도 결정적인 역할을 했습니다.",
-                img: "cpe_bach_portrait.png",
-                identity: "궁정 쳄발리스트 · 둘째 아들"
-            }
-        ],
-        masterworks: [
-            {
-                title: "음악의 헌정",
-                bwv: "BWV 1079",
-                emoji: "👑",
-                desc: "프리드리히 대왕이 즉흥으로 제시한 복잡한 주제('왕의 테마')를 바탕으로 리체르카레·카논·트리오 소나타를 엮은 모음집. 바흐는 귀국 후 악보를 정교하게 정리해 왕에게 헌정했습니다. '리체르카레(ricercare)'라는 단어를 라틴어 두문자로 풀면 'Regis Iussu Cantio Et Reliqua Canonica Arte Resoluta'(왕의 명으로 노래와 나머지를 카논 기법으로 풀다)가 됩니다—바흐의 유머이자 지적 유희입니다.",
-                youtubeId: "Lv5A1gy2oys",
-                youtubeStart: 0,
-                youtubeVolume: 70,
-                audioTitle: "음악의 헌정 BWV 1079 - 3성부 리체르카레 ♦ Leo van Doeselaar (All of Bach)"
-            }
-        ]
-    },
-    {
-        id: "halle",
-        isBranch: true,
-        nameKR: "할레",
-        nameDE: "Halle",
-        period: "1746 (빌헬름 프리데만 바흐 취임)",
-        badge: ["첫째 아들의 도시", "빌헬름 프리데만"],
-        coords: [51.4828, 11.9700],
-        desc: "할레는 바흐의 첫째 아들 빌헬름 프리데만 바흐가 약 18년간 활동한 도시입니다. 라이프치히에서 불과 40km 거리인 이곳에서 프리데만은 성모 마르크트 교회의 오르가니스트이자 음악감독으로 봉직했습니다. 아버지의 천재성을 가장 많이 물려받았다는 평가를 받았으나, 변화하는 시대에 적응하지 못한 채 결국 1764년 이 직위를 사임하고 유랑 음악가의 길을 걷게 됩니다. 아버지 바흐도 생전에 할레를 여러 차례 방문하며 아들의 활동을 지켜보았습니다.",
-        img: "할레.png",
-        youtubeId: "zoPuLlvTMfU",
-        youtubeStart: 13,
-        youtubeVolume: 60,
-        audioTitle: "W.F. Bach — Sinfonia in D minor F 65 ♦ Jeune Orchestre Atlantique · Stéphanie-Marie Degand",
-        audioAttribution: "출처: YouTube",
-        influencer: {
-            name: "빌헬름 프리데만 바흐",
-            years: "1710 – 1784",
-            desc: "바흐의 첫째 아들 빌헬름 프리데만은 아버지에게 직접 음악을 배운 가장 총애받은 아들이었습니다. '클라비어 소곡집(빌헬름 프리데만 바흐를 위한 클라비어 소곡집)'은 아버지가 아들의 교육을 위해 직접 편찬한 교본입니다. 뛰어난 즉흥 연주 능력과 독창적인 작곡 스타일을 지녔으나, 아버지의 거대한 그림자와 시대의 변화 사이에서 끝내 안정을 찾지 못한 비운의 천재였습니다.",
-            img: "wf_bach_portrait.png",
-            identity: "바흐의 첫째 아들"
-        },
-        next: [
-            { id: "leipzig", label: "<span class='nav-text'>돌아가기: 라이프치히</span><span class='nav-arrow'>↩</span>" }
         ]
     },
     {
@@ -1297,6 +1220,83 @@ const citiesData = [
         ]
     },
     {
+        id: "halle",
+        isBranch: true,
+        nameKR: "할레",
+        nameDE: "Halle",
+        period: "1746 (빌헬름 프리데만 바흐 취임)",
+        badge: ["첫째 아들의 도시", "빌헬름 프리데만"],
+        coords: [51.4828, 11.9700],
+        desc: "할레는 바흐의 첫째 아들 빌헬름 프리데만 바흐가 약 18년간 활동한 도시입니다. 라이프치히에서 불과 40km 거리인 이곳에서 프리데만은 성모 마르크트 교회의 오르가니스트이자 음악감독으로 봉직했습니다. 아버지의 천재성을 가장 많이 물려받았다는 평가를 받았으나, 변화하는 시대에 적응하지 못한 채 결국 1764년 이 직위를 사임하고 유랑 음악가의 길을 걷게 됩니다. 아버지 바흐도 생전에 할레를 여러 차례 방문하며 아들의 활동을 지켜보았습니다.",
+        img: "할레.png",
+        youtubeId: "zoPuLlvTMfU",
+        youtubeStart: 13,
+        youtubeVolume: 60,
+        audioTitle: "W.F. Bach — Sinfonia in D minor F 65 ♦ Jeune Orchestre Atlantique · Stéphanie-Marie Degand",
+        audioAttribution: "출처: YouTube",
+        influencer: {
+            name: "빌헬름 프리데만 바흐",
+            years: "1710 – 1784",
+            desc: "바흐의 첫째 아들 빌헬름 프리데만은 아버지에게 직접 음악을 배운 가장 총애받은 아들이었습니다. '클라비어 소곡집(빌헬름 프리데만 바흐를 위한 클라비어 소곡집)'은 아버지가 아들의 교육을 위해 직접 편찬한 교본입니다. 뛰어난 즉흥 연주 능력과 독창적인 작곡 스타일을 지녔으나, 아버지의 거대한 그림자와 시대의 변화 사이에서 끝내 안정을 찾지 못한 비운의 천재였습니다.",
+            img: "wf_bach_portrait.png",
+            identity: "바흐의 첫째 아들"
+        },
+        next: [
+            { id: "leipzig", label: "<span class='nav-text'>돌아가기: 라이프치히</span><span class='nav-arrow'>↩</span>" }
+        ]
+    },
+    {
+        id: "potsdam",
+        isBranch: true,
+        nameKR: "포츠담",
+        nameDE: "Potsdam",
+        period: "1747 (62세)",
+        badge: ["초대형 연주", "음악의 헌정", "아들과의 재회"],
+        coords: [52.3960, 13.0450],
+        desc: "노년의 바흐는, 아들 카를 필리프 에마누엘이 프리드리히 대왕의 궁정 쳄발리스트로 근무하던 포츠담 상수시 궁전에 초대되었습니다. 부자의 재회이자 역사적인 만남이었습니다. 왕이 제시한 복잡한 주제를 바탕으로 대위법적 즉흥 연주를 펼친 후, 이를 악보로 정리하여 음악의 헌정이라는 제목으로 바쳤습니다.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/Aerial_image_of_Sanssouci_%28view_from_the_south%29.jpg",
+        youtubeId: "Lv5A1gy2oys",
+        youtubeStart: 9,
+        youtubeVolume: 75, // Chamber music, moderate
+        audioTitle: "<음악의 헌정> 중 3성부 리체르카레, BWV 1079 (Fp. 레오 판 두셀라르, Leo van Doeselaar)",
+        audioAttribution: "출처: YouTube 채널 'Netherlands Bach Society'",
+        influencer: {
+            name: "프리드리히 대왕",
+            years: "1712 – 1786",
+            desc: "포츠담 궁정에서 프로이센의 군주 프리드리히 대왕을 만난 노거장 바흐는 '왕의 테마'로 즉흥 연주를 펼쳤습니다. 대왕은 바흐를 '단 한 명의 거장'이라 칭송하며 최고의 예우를 다했습니다.",
+            img: "potsdam_influence.jpg",
+            identity: "바흐를 초대한 군주"
+        },
+        influencers: [
+            {
+                name: "프리드리히 대왕",
+                years: "1712 – 1786",
+                desc: "포츠담 궁정에서 프로이센의 군주 프리드리히 대왕을 만난 노거장 바흐는 '왕의 테마'로 즉흥 연주를 펼쳤습니다. 대왕은 바흐를 '단 한 명의 거장'이라 칭송하며 최고의 예우를 다했습니다.",
+                img: "potsdam_influence.jpg",
+                identity: "바흐를 초대한 군주"
+            },
+            {
+                name: "카를 필리프 에마누엘 바흐",
+                years: "1714 – 1788",
+                desc: "바흐의 다섯째 아들이자 둘째 아들 중 가장 성공한 음악가인 카를 필리프 에마누엘은, 프리드리히 대왕의 궁정 쳄발리스트로 약 30년간 봉직했습니다. 아버지의 포츠담 방문을 주선한 장본인이며, '감정과다 양식(엠프핀트자머 슈틸)'의 선구자로서 하이든과 모차르트에게 깊은 영향을 끼쳤습니다. 아버지 바흐의 작품을 보존하고 전파하는 데에도 결정적인 역할을 했습니다.",
+                img: "cpe_bach_portrait.png",
+                identity: "궁정 쳄발리스트 · 둘째 아들"
+            }
+        ],
+        masterworks: [
+            {
+                title: "음악의 헌정",
+                bwv: "BWV 1079",
+                emoji: "👑",
+                desc: "프리드리히 대왕이 즉흥으로 제시한 복잡한 주제('왕의 테마')를 바탕으로 리체르카레·카논·트리오 소나타를 엮은 모음집. 바흐는 귀국 후 악보를 정교하게 정리해 왕에게 헌정했습니다. '리체르카레(ricercare)'라는 단어를 라틴어 두문자로 풀면 'Regis Iussu Cantio Et Reliqua Canonica Arte Resoluta'(왕의 명으로 노래와 나머지를 카논 기법으로 풀다)가 됩니다—바흐의 유머이자 지적 유희입니다.",
+                youtubeId: "Lv5A1gy2oys",
+                youtubeStart: 0,
+                youtubeVolume: 70,
+                audioTitle: "음악의 헌정 BWV 1079 - 3성부 리체르카레 ♦ Leo van Doeselaar (All of Bach)"
+            }
+        ]
+    },
+    {
         id: "milan",
         isBranch: true,
         nameKR: "밀라노",
@@ -1305,7 +1305,7 @@ const citiesData = [
         badge: ["막내아들의 도시", "요한 크리스티안"],
         coords: [45.464, 9.190],
         desc: "밀라노는 바흐의 막내아들 요한 크리스티안 바흐가 음악적 전환을 이룬 도시입니다. 1755년경 이탈리아로 건너간 크리스티안은 밀라노 대성당의 오르가니스트로 활동하며, 아버지의 루터교 전통에서 벗어나 가톨릭으로 개종하고 이탈리아 오페라 양식을 깊이 흡수했습니다. 이곳에서 쌓은 오페라 작곡 경험은 훗날 런던에서의 화려한 성공의 밑거름이 되었습니다.",
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Milano_Duomo.jpg/960px-Milano_Duomo.jpg",
+        img: "밀라노.png",
         youtubeId: "",
         youtubeStart: 0,
         youtubeVolume: 60,
@@ -1332,7 +1332,7 @@ const citiesData = [
         badge: ["런던의 바흐", "요한 크리스티안"],
         coords: [51.507, -0.128],
         desc: "런던은 요한 크리스티안 바흐가 '런던의 바흐(London Bach)'라는 별명으로 유럽 최고의 명성을 얻은 도시입니다. 1762년 런던에 정착한 그는 왕실 음악 교사로 활동하며 오페라와 협주곡으로 대중의 사랑을 받았습니다. 특히 1764년 런던을 방문한 8세의 어린 모차르트와 만남은 음악사의 중요한 순간으로, 크리스티안의 우아한 양식은 모차르트의 초기 피아노 협주곡에 직접적인 영향을 끼쳤습니다.",
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/St_Paul%27s_Cathedral_Dome_from_One_New_Change_-_Diliff.jpg/960px-St_Paul%27s_Cathedral_Dome_from_One_New_Change_-_Diliff.jpg",
+        img: "런던.jpg",
         youtubeId: "",
         youtubeStart: 0,
         youtubeVolume: 60,
@@ -2163,6 +2163,7 @@ function viewCity(city) {
                     const btn = document.createElement('button');
                     btn.className = 'nav-btn';
                     if (navData.isBranch) btn.classList.add('branch-btn');
+                    if (city.id === 'wechmar' || city.id === 'eisenach') btn.classList.add('nav-btn-wide');
                     btn.innerHTML = navData.label;
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -2171,6 +2172,16 @@ function viewCity(city) {
                     });
                     cityNavButtonsEl.appendChild(btn);
                 });
+
+                // Equalize button widths for wechmar/eisenach
+                if (city.id === 'wechmar' || city.id === 'eisenach') {
+                    requestAnimationFrame(() => {
+                        const btns = cityNavButtonsEl.querySelectorAll('.nav-btn-wide');
+                        let maxW = 0;
+                        btns.forEach(b => { if (b.offsetWidth > maxW) maxW = b.offsetWidth; });
+                        btns.forEach(b => { b.style.width = maxW + 'px'; });
+                    });
+                }
             }
         }
 

@@ -876,12 +876,25 @@ h3,
     justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     width: 160px;
-    /* 踰꾪듉 ?ш린瑜????異뺤냼?섏뿬 怨듦컙 ?뺣낫 */
+    /* 踰꾪듉 ?ш린瑜????異뺤냼?섏뿬 怨듦컙 ?뺣낫 */
+}
+
+.nav-btn.nav-btn-wide {
+    width: auto;
+}
+
+.nav-btn-wide .nav-text {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .nav-text {
     text-align: left;
     flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-arrow {
